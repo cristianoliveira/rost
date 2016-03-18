@@ -1,5 +1,4 @@
 use std::env;
-use commands::Command;
 mod commands;
 
 fn die_showing_help() -> ! {
@@ -7,6 +6,7 @@ fn die_showing_help() -> ! {
 
   Usage:
     add [ip] [host] to the host file.
+    delete [ip/host] from the host file.
   ");
 
   std::process::exit(1);
@@ -15,11 +15,10 @@ fn die_showing_help() -> ! {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let command = args[0].to_string();
-    let cli_command = commands::build(command, args);
-    let cmd = match cli_command {
-       Some(cli_command) => cli_command,
-       None => { die_showing_help(); },
-    };
-    cmd.execute();
+    let command = args[1].to_string();
+    if commands::execute(command, args) {
+        println!("Command executed.");
+    } else {
+        die_showing_help();
+    }
 }
