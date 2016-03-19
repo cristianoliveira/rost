@@ -19,7 +19,11 @@ fn die_showing_help() -> ! {
 }
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let mut args: Vec<String> = env::args().collect();
+
+    if args.len() == 1 {
+        die_showing_help()
+    };
 
     let command = args[1].to_string();
     let execution = match commands::make(command, args) {
