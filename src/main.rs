@@ -18,18 +18,19 @@ fn die_showing_help() -> ! {
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let mut file = match OpenOptions::new().append(true)
-                                           .read(true)
-                                           .write(true)
-                                           .open("/etc/hosts_bkp") {
-        Ok(f) => f,
-        Err(err) => panic!("file error: {}", err)
-    };
 
     let command = args[1].to_string();
     let execution = match commands::make(command, args) {
       Some(e) => e ,
       None => { die_showing_help(); },
+    };
+
+    let mut file = match OpenOptions::new().append(true)
+                                           .read(true)
+                                           .write(true)
+                                           .open("/etc/hosts") {
+        Ok(f) => f,
+        Err(err) => panic!("file error: {}", err)
     };
 
     match execution.execute(file) {
