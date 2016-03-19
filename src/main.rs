@@ -10,6 +10,7 @@ fn die_showing_help() -> ! {
   Usage:
     add [ip] [host] to the host file.
     delete [ip/host] from the host file.
+    list all current hosts.
   ");
 
   std::process::exit(1);

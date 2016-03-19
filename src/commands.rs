@@ -1,11 +1,18 @@
 use std::io::prelude::*;
 use std::fs::File;
-use std::io::BufReader;
-use std::io::SeekFrom;
 use std::io;
 
+
+/// # Execution
+///
+/// Process to be executed in the fle.
+///
+/// params [file] to be changed.
+///
+/// return io::Result, may return io errors.
+///
 pub trait Execution {
-  fn execute(&self, file: File) -> io::Result<()>;
+    fn execute(&self, file: File) -> io::Result<()>;
 }
 
 /// # AddCommand
@@ -38,19 +45,33 @@ pub struct DeleteCommand {
 }
 impl Execution for DeleteCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
-      let mut content = String::new();
-      file.read_to_string(&mut content);
+        let mut content = String::new();
+        file.read_to_string(&mut content);
 
-      let mut new_content = String::new();
-      for line in content.lines() {
-        if !line.contains(&self.host_ip){
-          new_content.push_str(line);
-          new_content.push_str("\n");
-        }
-      };
+        let mut new_content = String::new();
+        for line in content.lines() {
+            if !line.contains(&self.host_ip){
+                new_content.push_str(line);
+                new_content.push_str("\n");
+            }
+        };
 
-      file.set_len(0);
-      file.write_all(new_content.as_ref())
+        file.set_len(0);
+        file.write_all(new_content.as_ref())
+    }
+}
+
+/// # ListCommand
+///
+/// It lists all current hosts in the file.
+///
+struct ListCommand;
+impl Execution for ListCommand {
+    fn execute(&self, mut file: File) -> io::Result<()> {
+        let mut content = String::new();
+        let _ = file.read_to_string(&mut content);
+        print!("{}", content);
+        Ok(())
     }
 }
 
@@ -67,7 +88,34 @@ pub fn make(command: String, args: Vec<String>) -> Option<Box<Execution+'static>
         "delete" => Box::new(DeleteCommand{
             host_ip: args[2].to_string(),
         }),
+        "list" => Box::new(ListCommand),
          _  => return None
     };
     return Some(cmd);
+}
+
+
+#[test]
+fn it_returns_none() {
+    let mut args: Vec<String> = 
+        vec!("rost".to_string(),
+             "add".to_string(),
+             "123.1.1.1".to_string(),
+             "local".to_string());
+
+    let result: Option<Box<Execution>> = make("foo".to_string(), args);
+    assert!(result.is_none());
+}
+
+#[test]
+fn it_returns_command() {
+    let mut args: Vec<String> = 
+        vec!("rost".to_string(),
+             "add".to_string(),
+             "123.1.1.1".to_string(),
+             "local".to_string());
+
+    assert!(make("add".to_string(), args.clone()).is_some());
+    assert!(make("delete".to_string(), args.clone()).is_some());
+    assert!(make("list".to_string(), args.clone()).is_some());
 }
