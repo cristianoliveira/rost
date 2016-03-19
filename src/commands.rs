@@ -8,12 +8,18 @@ pub trait Execution {
   fn execute(&self, file: File) -> io::Result<()>;
 }
 
-#[derive(Debug)]
+/// # AddCommand
+///
+/// It add new host [EOF] using the following format:
+/// [ip] [host]
+///
+/// # Example:
+///   127.0.0.0  localhost
+///
 pub struct AddCommand {
     pub ip: String,
     pub host: String,
 }
-
 impl Execution for AddCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
        let new_item = format!("\n {ip}  {host} #r", ip=self.ip, host=self.host);
@@ -22,10 +28,14 @@ impl Execution for AddCommand {
     }
 }
 
+/// # DeleteCommand
+///
+/// It removes one or more hosts from the file 
+/// based on [host_ip] passed as param
+///
 pub struct DeleteCommand {
     pub host_ip: String,
 }
-
 impl Execution for DeleteCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
       let mut content = String::new();
@@ -44,6 +54,10 @@ impl Execution for DeleteCommand {
     }
 }
 
+/// # Return a command based on [command] passed as param
+/// or None if any command found.
+///
+/// return Execution
 pub fn make(command: String, args: Vec<String>) -> Option<Box<Execution+'static>>{
     let cmd: Box<Execution> = match command.as_ref() {
         "add" => Box::new(AddCommand{
