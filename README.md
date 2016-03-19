@@ -1,7 +1,7 @@
 # rost [![Build Status](https://travis-ci.org/cristianoliveira/rost.svg?branch=master)](https://travis-ci.org/cristianoliveira/rost)
 A simple host manager in Rust.
 
-# Installation
+## Installation
 To install it from source, clone this repo and inside this folder do
 ```bash
 # inside rost folder
@@ -9,12 +9,12 @@ sudo make install
 ```
 It will build rost and send to /usr/bin/rost
 
-# Usage
+## Usage
 ```bash
 rost help
 ```
 
-# Tests
+## Tests
 Running tests:
 ```bash
 make test
@@ -29,5 +29,5 @@ make test
 
 **Pull Request should have unit tests**
 
-# Licence 
+## Licence 
 This project was made under MIT licence.
