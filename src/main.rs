@@ -8,9 +8,11 @@ fn die_showing_help() -> ! {
   println!("Rost a command line host manager.
 
   Usage:
-    add [ip] [host] to the host file.
-    delete [ip/host] from the host file.
-    list all current hosts.
+    add - [ip] [host] to the host file. *
+    delete - [ip/host] from the host file. *
+    list - all current hosts.
+
+  * May require sudo to change host file
   ");
 
   std::process::exit(1);
