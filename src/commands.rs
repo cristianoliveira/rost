@@ -29,7 +29,7 @@ pub struct AddCommand {
 }
 impl Execution for AddCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
-       let new_item = format!("\n {ip}  {host} #r", ip=self.ip, host=self.host);
+       let new_item = format!("\n{ip}  {host} #rost-added", ip=self.ip, host=self.host);
        try!(file.write(new_item.as_ref()));
        Ok(())
     }
@@ -70,7 +70,7 @@ impl Execution for ListCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
         let mut content = String::new();
         let _ = file.read_to_string(&mut content);
-        print!("{}", content);
+        println!("{}", content);
         Ok(())
     }
 }

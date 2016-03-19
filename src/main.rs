@@ -36,7 +36,7 @@ fn main() {
     };
 
     match execution.execute(file) {
-      Ok(_) => { println!("Host changed with success.")},
+      Ok(_) => { println!("Command executed.") },
       Err(err) => panic!("Error while execution: {}", err),
     }
 }
