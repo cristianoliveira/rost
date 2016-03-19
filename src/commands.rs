@@ -30,7 +30,8 @@ pub struct AddCommand {
 impl Execution for AddCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
        let new_item = format!("\n{ip}  {host} #rost-added", ip=self.ip, host=self.host);
-       try!(file.write(new_item.as_ref()));
+       let _ = file.write(new_item.as_ref())
+                   .expect("File is read only");
        Ok(())
     }
 }
@@ -46,7 +47,7 @@ pub struct DeleteCommand {
 impl Execution for DeleteCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
         let mut content = String::new();
-        file.read_to_string(&mut content);
+        try!(file.read_to_string(&mut content));
 
         let mut new_content = String::new();
         for line in content.lines() {
@@ -56,7 +57,7 @@ impl Execution for DeleteCommand {
             }
         };
 
-        file.set_len(0);
+        try!(file.set_len(0));
         file.write_all(new_content.as_ref())
     }
 }
@@ -69,7 +70,7 @@ struct ListCommand;
 impl Execution for ListCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
         let mut content = String::new();
-        let _ = file.read_to_string(&mut content);
+        file.read_to_string(&mut content).expect("File cannot be read.");
         println!("{}", content);
         Ok(())
     }

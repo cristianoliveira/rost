@@ -1,4 +1,4 @@
-use std::fs::{File,OpenOptions};
+use std::fs::{OpenOptions};
 use std::io::prelude::*;
 
 use std::env;
@@ -19,7 +19,7 @@ fn die_showing_help() -> ! {
 }
 
 fn main() {
-    let mut args: Vec<String> = env::args().collect();
+    let args: Vec<String> = env::args().collect();
 
     if args.len() == 1 {
         die_showing_help()
@@ -31,10 +31,10 @@ fn main() {
       None => { die_showing_help(); },
     };
 
-    let mut file = match OpenOptions::new().append(true)
-                                           .read(true)
-                                           .write(true)
-                                           .open("/etc/hosts") {
+    let file = match OpenOptions::new().append(true)
+                                       .read(true)
+                                       .write(true)
+                                       .open("/etc/hosts") {
         Ok(f) => f,
         Err(err) => panic!("file error: {}", err)
     };
