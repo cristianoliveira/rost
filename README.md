@@ -1,6 +1,9 @@
 # rost [![Build Status](https://travis-ci.org/cristianoliveira/rost.svg?branch=master)](https://travis-ci.org/cristianoliveira/rost)
 A simple host manager in Rust.
 
+### Demo
+![demo](https://raw.githubusercontent.com/cristianoliveira/rost/master/demorost.mov.gif)
+
 ## Installation
 To install it from source, clone this repo and inside this folder do
 ```bash
@@ -11,7 +14,22 @@ It will build rost and send to /usr/local/bin/rost
 
 ## Usage
 ```bash
-rost help
+rost -h
+```
+
+### Add host
+```bash
+sudo rost add 10.0.0.1  myrouter
+```
+### Delete host
+It delete all host that match the pattern.
+```bash
+sudo rost del myrouter
+```
+
+### List host
+```bash
+sudo rost list
 ```
 
 ## Tests
