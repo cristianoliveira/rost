@@ -7,7 +7,7 @@ To install it from source, clone this repo and inside this folder do
 # inside rost folder
 sudo make install
 ```
-It will build rost and send to /usr/bin/rost
+It will build rost and send to /usr/local/bin/rost
 
 ## Usage
 ```bash
