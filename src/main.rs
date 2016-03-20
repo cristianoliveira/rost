@@ -14,7 +14,7 @@ Rost a command line host manager.
 
 Usage:
   rost add <ip> <host>
-  rost delete <host_ip>
+  rost del <pattern>
   rost list
   rost -h
   rost -v

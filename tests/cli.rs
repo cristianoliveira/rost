@@ -22,8 +22,8 @@ fn it_returns_some() {
     assert!(command(args).is_some());
 
     let mut args = Args::new();
-    args.cmd_delete = true;
-    args.arg_host_ip = Some("123".to_string());
+    args.cmd_del = true;
+    args.arg_pattern = Some("123".to_string());
     assert!(command(args).is_some());
 
     let mut args = Args::new();
@@ -62,7 +62,7 @@ fn it_delete_host_from_file(){
     let mut content = String::new();
     let mut file = open_file(filename);
     DeleteCommand{
-        host_ip: "123.1.1.1".to_string(),
+       pattern: "123.1.1.1".to_string(),
     }.execute(file);
 
     file = open_file(filename);

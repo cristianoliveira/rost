@@ -4,7 +4,7 @@ use std::io;
 
 /// # Execution
 ///
-/// Process to be executed in the fle.
+/// Process to be executed in the file.
 ///
 /// params [file] to be changed.
 ///
@@ -37,10 +37,10 @@ impl Execution for AddCommand {
 /// # DeleteCommand
 ///
 /// It removes one or more hosts from the file 
-/// based on [host_ip] passed as param
+/// based on [pattern] passed as param
 ///
 pub struct DeleteCommand {
-    pub host_ip: String,
+    pub pattern: String,
 }
 impl Execution for DeleteCommand {
     fn execute(&self, mut file: File) -> io::Result<()> {
@@ -49,7 +49,7 @@ impl Execution for DeleteCommand {
 
         let mut new_content = String::new();
         for line in content.lines() {
-            if !line.contains(&self.host_ip){
+            if !line.contains(&self.pattern){
                 new_content.push_str(line);
                 new_content.push_str("\n");
             }

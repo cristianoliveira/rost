@@ -18,10 +18,10 @@ pub fn command(args: Args) -> Option<Box<Execution+'static>>{
             })
         );
     }
-    if args.cmd_delete {
+    if args.cmd_del {
         return Some(Box::new(
                 DeleteCommand{
-                    host_ip: args.arg_host_ip.unwrap(),
+                    pattern: args.arg_pattern.unwrap(),
                     })
                 );
     }
